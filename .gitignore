@@ -1,0 +1,106 @@
+##
+# THIS FILE IS PART OF Lailo^TM Robot Server PROJECT
+#
+# It is prohibited to use it for other business
+# activities before it is allowed.
+#
+# Copyright (c) 2020 Kehan.Xue kehan.xue@gmail.com
+# Copyright (c) 2020 无锡复创机器人 Co., Ltd.
+
+# BUILD PRODUCTS
+*.d
+*.o
+*.disasm
+*.map
+*.elf
+*.bin
+*.hex
+*.slo
+*.lo
+*.obj
+
+# CMAKE TEMPORARY FILES
+CMakeCache.txt
+CMakeFiles/
+CMakeFiles/*
+
+# BUILD FOLDERS
+bin/
+bin/*
+build/
+build/*
+cmake-build-*
+
+# ROS GENERATED PRODUCTS
+msg_gen/
+msg_gen/*
+srv_gen/
+srv_gen/*
+
+# ROS GENERATED PYTHON
+_*.py
+_*.pyc
+
+# ROS BAG FILES
+*.bag
+
+# XCODE BUILD PRODUCTS
+*.build/
+*.build/*
+
+# XCODE USER SETTINGS
+*.xcuserdatad/
+*.xcuserdatad/*
+*.pbxuser
+*.pbxuser/*
+
+# QTCREATOR PROJECT
+*.includes
+*.creator
+*.creator.user
+*.config
+*.files
+
+# GEANY PROJECTS
+*.geany
+
+# JETBRAINS
+*.idea
+
+# ZEND/ECLIPSE
+*.buildpath
+*.settings
+*.project
+*.pydevproject
+
+# MACOSX SETTINGS
+*.DS_Store
+
+# GENERATED DOCUMENTATION
+html_docs/
+html_docs/*
+
+# ANDROID SDK GENERATED JAVA
+gen/
+gen/*
+
+# COMPILED DYNAMIC LIBRARIES
+*.so
+*.dylib
+*.dll
+
+# COMPILED STATIC LIBRARIES
+*.lai
+*.la
+*.a
+*.lib
+
+# EXECUTABLES
+*.exe
+*.out
+*.app
+
+# Protobuf
+*.pb.cc
+*.pb.h
+
