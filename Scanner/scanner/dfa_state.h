@@ -1,0 +1,16 @@
+//
+// Created by kehan on 2020/4/17.
+//
+
+#ifndef MJAVA_SCANNER__DFA_STATE_H_
+#define MJAVA_SCANNER__DFA_STATE_H_
+
+enum class DFAState {
+  START = 0,
+  IDENTIFIER,
+  DIGIT,
+  FIRST_CHAR_OF_DOUBLE_CHAR_OPERATOR,
+  UNDERLINE
+};
+
+#endif //MJAVA_SCANNER__DFA_STATE_H_
