@@ -1,0 +1,3 @@
+专用符号/test7.txt:7:22 error: "|", incorrect syntax!
+专用符号/test7.txt:7:23 error: "|", incorrect syntax!
+专用符号/test7.txt:52:31 error: ">", incorrect syntax!

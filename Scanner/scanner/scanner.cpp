@@ -28,8 +28,8 @@ void Scanner::Run(const std::string &input_file_name,
     input_file_.open(input_file_name);
     input_file_name_ = input_file_name;
 
-    output_token_file_.open(output_token_file_name);
-    output_error_file_.open(output_token_file_name + "_error");
+    output_token_file_.open(output_token_file_name + ".txt");
+    output_error_file_.open(output_token_file_name + "_error.txt");
   } catch (...) {
     std::cout << "Open file failed!" << std::endl;
     return;
@@ -79,7 +79,7 @@ void Scanner::ParseLine(const std::string &each_line, int line_number) {
 
         } else if (p_mjava_utils_->IsLetter(current_char)) {
           is_index_forward = true;
-          current_dfa_state_ = DFAState::IDENTIFIER;
+          current_dfa_state_ = DFAState::STRING;
           current_word_.clear();
           current_word_.push_back(current_char);
 
@@ -108,7 +108,7 @@ void Scanner::ParseLine(const std::string &each_line, int line_number) {
             current_dfa_state_ = DFAState::START;
             output_error_file_
                 << ErrorMsgBuilder::BuildErrorMsg(input_file_name_,
-                                                  "begin with undefined character!",
+                                                  "incorrect syntax!",
                                                   line_number,
                                                   char_index + 1,
                                                   current_char);
@@ -117,10 +117,10 @@ void Scanner::ParseLine(const std::string &each_line, int line_number) {
         break;
       }
 
-      case DFAState::IDENTIFIER: {
+      case DFAState::STRING: {
         if (p_mjava_utils_->IsLetterOrDigit(current_char)) {
           is_index_forward = true;
-          current_dfa_state_ = DFAState::IDENTIFIER;
+          current_dfa_state_ = DFAState::STRING;
           current_word_.push_back(current_char);
 
         } else if (p_mjava_utils_->IsUnderLine(current_char)) {
@@ -189,7 +189,7 @@ void Scanner::ParseLine(const std::string &each_line, int line_number) {
                                                 "undefined operator!",
                                                 line_number,
                                                 char_index + 1,
-                                                current_char);
+                                                current_double_char_op_first_);
         }
         break;
       }
@@ -197,14 +197,14 @@ void Scanner::ParseLine(const std::string &each_line, int line_number) {
       case DFAState::UNDERLINE: {
         if (p_mjava_utils_->IsLetterOrDigit(current_char)) {
           is_index_forward = true;
-          current_dfa_state_ = DFAState::IDENTIFIER;
+          current_dfa_state_ = DFAState::STRING;
           current_word_.push_back(current_char);
         } else {
           is_index_forward = false;
           current_dfa_state_ = DFAState::START;
           output_error_file_
               << ErrorMsgBuilder::BuildErrorMsg(input_file_name_,
-                                                "incorrect definition syntax!",
+                                                "before, has incorrect definition syntax!",
                                                 line_number,
                                                 char_index + 1,
                                                 current_char);

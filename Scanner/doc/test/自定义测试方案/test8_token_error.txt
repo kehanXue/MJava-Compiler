@@ -1,0 +1,6 @@
+自定义测试方案/test8.txt:19:9 error: "_", incorrect syntax!
+自定义测试方案/test8.txt:27:27 error: "#", incorrect syntax!
+自定义测试方案/test8.txt:34:24 error: "(", before, has incorrect definition syntax!
+自定义测试方案/test8.txt:52:31 error: ">", incorrect syntax!
+自定义测试方案/test8.txt:69:29 error: "&", undefined operator!
+自定义测试方案/test8.txt:82:53 error: "(", before, has incorrect definition syntax!

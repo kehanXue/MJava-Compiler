@@ -55,7 +55,7 @@ MJavaUtils::MJavaUtils() {
    * Double char operators:
    * &&
    */
-  umap_double_char_operators_.insert({"&&", "&&"});
+  umap_double_char_operators_.insert({"&&", "AND"});
 }
 
 MJavaUtils::~MJavaUtils() = default;

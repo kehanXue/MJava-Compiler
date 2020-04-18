@@ -1,0 +1,1 @@
+专用符号/test6.txt:52:31 error: ">", incorrect syntax!

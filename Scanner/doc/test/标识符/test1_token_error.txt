@@ -1,0 +1,3 @@
+标识符/test1.txt:19:9 error: "_", incorrect syntax!
+标识符/test1.txt:52:31 error: ">", incorrect syntax!
+标识符/test1.txt:69:29 error: "&", undefined operator!
