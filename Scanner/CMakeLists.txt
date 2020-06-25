@@ -4,6 +4,7 @@ project(mjava-scanner)
 set(CMAKE_CXX_STANDARD 14)
 
 include_directories(
+  ../Utils
   ./
 )
 
@@ -12,6 +13,6 @@ add_executable(mjava-scanner
   scanner/scanner.cpp
   scanner/scanner.h
   scanner/dfa_state.h
-  utils/error_msg_builder.h
-  utils/mjava_utils.cpp
-  utils/mjava_utils.h)
+  ../Utils/utils/error_msg_builder.h
+  ../Utils/utils/mjava_utils.cpp
+  ../Utils/utils/mjava_utils.h ../Utils/utils/token_type.h)

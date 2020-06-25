@@ -4,8 +4,9 @@ project(mjava-parser)
 set(CMAKE_CXX_STANDARD 14)
 
 include_directories(
+  ../Utils
   ./
 )
 
 add_executable(mjava-parser
-  main.cpp)
+  main.cpp parser/syntax_tree_node.cpp parser/syntax_tree_node.h ../Utils/utils/syntax_type.h)

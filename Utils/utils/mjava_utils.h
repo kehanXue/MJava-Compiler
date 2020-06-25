@@ -7,6 +7,7 @@
 
 #include <string>
 #include <unordered_map>
+#include "token_type.h"
 
 class MJavaUtils {
  public:
@@ -22,12 +23,15 @@ class MJavaUtils {
   bool IsDoubleCharOperatorFirst(const char &input_char);
   bool IsDoubleCharOperatorSecond(const char &input_char, const char &first_char, std::string &token);
 
+  static TokenType StringToTokenType(const std::string& token_type);
+
   static bool BeginWithSystemOutPrintln(const std::string &each_line, const size_t &begin_pose);
 
  private:
   std::unordered_map<std::string, std::string> umap_keywords_;
   std::unordered_map<char, std::string> umap_single_char_operators_;
   std::unordered_map<std::string, std::string> umap_double_char_operators_;
+  std::unordered_map<std::string, TokenType> umap_token_types_;
 };
 
 #endif //MJAVA_SCANNER__MJAVA_UTILS_H_

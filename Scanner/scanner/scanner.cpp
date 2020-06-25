@@ -12,8 +12,8 @@ Scanner::Scanner() :
 
 Scanner::~Scanner() = default;
 
-void Scanner::Run(const std::string &input_file_name,
-                  const std::string &output_token_file_name) {
+std::vector<TokenType> Scanner::Run(const std::string &input_file_name,
+                                    const std::string &output_token_file_name) {
   if (input_file_.is_open()) {
     input_file_.close();
   }
@@ -24,6 +24,8 @@ void Scanner::Run(const std::string &input_file_name,
     input_file_.close();
   }
 
+  std::vector<TokenType> token_type_list;
+
   try {
     input_file_.open(input_file_name);
     input_file_name_ = input_file_name;
@@ -32,29 +34,35 @@ void Scanner::Run(const std::string &input_file_name,
     output_error_file_.open(output_token_file_name + "_error.txt");
   } catch (...) {
     std::cout << "Open file failed!" << std::endl;
-    return;
+    return token_type_list;
   }
 
-  ParseFile();
+  ParseFile(token_type_list);
 
   input_file_.close();
   output_token_file_.close();
   output_error_file_.close();
+
+  return token_type_list;
 }
 
-void Scanner::ParseFile() {
+void Scanner::ParseFile(std::vector<TokenType> &token_type_list) {
   current_dfa_state_ = DFAState::START;
 
   std::string each_line;
   int line_number = 1;
   while (!input_file_.eof()) {
     std::getline(input_file_, each_line);
-    ParseLine(each_line, line_number);
+    ParseLine(each_line, line_number, token_type_list);
     ++line_number;
   }
+
+  token_type_list.emplace_back(TokenType::EOF_TOKEN);
 }
 
-void Scanner::ParseLine(const std::string &each_line, int line_number) {
+void Scanner::ParseLine(const std::string &each_line,
+                        int line_number,
+                        std::vector<TokenType> &token_type_list) {
   int char_index = 0;
   bool is_index_forward = false;
   bool last_char_is_blank = true;
@@ -73,7 +81,8 @@ void Scanner::ParseLine(const std::string &each_line, int line_number) {
         } else if (p_mjava_utils_->BeginWithSystemOutPrintln(each_line, char_index)) {
           is_index_forward = false;
           current_dfa_state_ = DFAState::START;
-          output_token_file_ << "SYSTEM.OUT.PRINTLN";
+          output_token_file_ << "SYSTEM_OUT_PRINTLN";
+          token_type_list.emplace_back(MJavaUtils::StringToTokenType("SYSTEM_OUT_PRINTLN"));
           last_char_is_blank = false;
           char_index += std::string("System.out.println").length();
 
@@ -101,6 +110,7 @@ void Scanner::ParseLine(const std::string &each_line, int line_number) {
               output_token_file_ << " ";
             }
             output_token_file_ << token;
+            token_type_list.emplace_back(MJavaUtils::StringToTokenType(token));
             last_char_is_blank = false;
 
           } else {
@@ -140,8 +150,10 @@ void Scanner::ParseLine(const std::string &each_line, int line_number) {
 
           if (p_mjava_utils_->IsKeyWords(current_word_, token)) {
             output_token_file_ << token;
+            token_type_list.emplace_back(MJavaUtils::StringToTokenType(token));
           } else {
             output_token_file_ << "IDENTIFIER";
+            token_type_list.emplace_back(MJavaUtils::StringToTokenType("IDENTIFIER"));
           }
         }
         break;
@@ -161,6 +173,7 @@ void Scanner::ParseLine(const std::string &each_line, int line_number) {
           last_char_is_blank = false;
 
           output_token_file_ << "DIGIT";
+          token_type_list.emplace_back(MJavaUtils::StringToTokenType("DIGIT"));
         }
         break;
       }
@@ -180,6 +193,7 @@ void Scanner::ParseLine(const std::string &each_line, int line_number) {
           last_char_is_blank = false;
 
           output_token_file_ << token;
+          token_type_list.emplace_back(MJavaUtils::StringToTokenType(token));
 
         } else {
           is_index_forward = false;

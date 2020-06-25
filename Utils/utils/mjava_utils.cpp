@@ -56,6 +56,7 @@ MJavaUtils::MJavaUtils() {
    * &&
    */
   umap_double_char_operators_.insert({"&&", "AND"});
+
 }
 
 MJavaUtils::~MJavaUtils() = default;
@@ -136,6 +137,87 @@ bool MJavaUtils::BeginWithSystemOutPrintln(const std::string &each_line, const s
   }
   auto following_char = each_line.at(begin_pose + std::string("System.out.println").length());
   return !(IsLetter(following_char) || IsDigit(following_char) || IsUnderLine(following_char));
+}
+
+TokenType MJavaUtils::StringToTokenType(const std::string &token_type) {
+  /*
+   * String to TokenTypes
+   */
+  if (token_type == "CLASS") {
+    return TokenType::CLASS;
+  } else if (token_type == "PUBLIC") {
+    return TokenType::PUBLIC;
+  } else if (token_type == "STATIC") {
+    return TokenType::STATIC;
+  } else if (token_type == "VOID") {
+    return TokenType::VOID;
+  } else if (token_type == "MAIN") {
+    return TokenType::MAIN;
+  } else if (token_type == "STRING") {
+    return TokenType::STRING;
+  } else if (token_type == "EXTENDS") {
+    return TokenType::EXTENDS;
+  } else if (token_type == "RETURN") {
+    return TokenType::RETURN;
+  } else if (token_type == "INT") {
+    return TokenType::INT;
+  } else if (token_type == "BOOLEAN") {
+    return TokenType::BOOLEAN;
+  } else if (token_type == "IF") {
+    return TokenType::IF;
+  } else if (token_type == "ELSE") {
+    return TokenType::ELSE;
+  } else if (token_type == "SYSTEM_OUT_PRINTLN") {
+    return TokenType::SYSTEM_OUT_PRINTLN;
+  } else if (token_type == "LENGTH") {
+    return TokenType::LENGTH;
+  } else if (token_type == "TRUE") {
+    return TokenType::TRUE;
+  } else if (token_type == "FALSE") {
+    return TokenType::FALSE;
+  } else if (token_type == "THIS") {
+    return TokenType::THIS;
+  } else if (token_type == "NEW") {
+    return TokenType::NEW;
+  } else if (token_type == "IDENTIFIER") {
+    return TokenType::IDENTIFIER;
+  } else if (token_type == "DIGIT") {
+    return TokenType::DIGIT;
+  } else if (token_type == "L_PARENTHESIS") {
+    return TokenType::L_PARENTHESIS;
+  } else if (token_type == "R_PARENTHESIS") {
+    return TokenType::R_PARENTHESIS;
+  } else if (token_type == "L_PARENTHESES") {
+    return TokenType::L_PARENTHESES;
+  } else if (token_type == "R_PARENTHESES") {
+    return TokenType::R_PARENTHESES;
+  } else if (token_type == "L_BRACE") {
+    return TokenType::L_BRACE;
+  } else if (token_type == "R_BRACE") {
+    return TokenType::R_BRACE;
+  } else if (token_type == "COMMA") {
+    return TokenType::COMMA;
+  } else if (token_type == "SEMICOLON") {
+    return TokenType::SEMICOLON;
+  } else if (token_type == "ASSIGNMENT") {
+    return TokenType::ASSIGNMENT;
+  } else if (token_type == "LESS_THAN") {
+    return TokenType::LESS_THAN;
+  } else if (token_type == "ADD") {
+    return TokenType::ADD;
+  } else if (token_type == "SUB") {
+    return TokenType::SUB;
+  } else if (token_type == "MULTI") {
+    return TokenType::MULTI;
+  } else if (token_type == "POINT") {
+    return TokenType::POINT;
+  } else if (token_type == "UN") {
+    return TokenType::UN;
+  } else if (token_type == "AND") {
+    return TokenType::AND;
+  }
+
+  return TokenType::ERROR;
 }
 
 
