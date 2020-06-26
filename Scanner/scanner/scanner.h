@@ -24,10 +24,10 @@ class Scanner {
            const std::string &output_token_file_name);
 
  private:
-  void ParseFile(std::vector<TokenType> &token_type_list);
-  void ParseLine(const std::string &each_line,
-      int line_number,
-      std::vector<TokenType> &token_type_list);
+  void ScanFile(std::vector<TokenType> &token_type_list);
+  void ScanLine(const std::string &each_line,
+                int line_number,
+                std::vector<TokenType> &token_type_list);
 
   std::ifstream input_file_;
   std::string input_file_name_;

@@ -22,10 +22,10 @@ class MJavaUtils {
   bool IsSingleCharOperator(const char &input_char, std::string &token);
   bool IsDoubleCharOperatorFirst(const char &input_char);
   bool IsDoubleCharOperatorSecond(const char &input_char, const char &first_char, std::string &token);
+  static bool BeginWithSystemOutPrintln(const std::string &each_line, const size_t &begin_pose);
 
   static TokenType StringToTokenType(const std::string& token_type);
-
-  static bool BeginWithSystemOutPrintln(const std::string &each_line, const size_t &begin_pose);
+  static std::string TokenTypeToString(const TokenType& token_type);
 
  private:
   std::unordered_map<std::string, std::string> umap_keywords_;
@@ -35,3 +35,4 @@ class MJavaUtils {
 };
 
 #endif //MJAVA_SCANNER__MJAVA_UTILS_H_
+

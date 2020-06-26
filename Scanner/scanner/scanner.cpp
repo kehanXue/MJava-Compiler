@@ -37,7 +37,7 @@ std::vector<TokenType> Scanner::Run(const std::string &input_file_name,
     return token_type_list;
   }
 
-  ParseFile(token_type_list);
+  ScanFile(token_type_list);
 
   input_file_.close();
   output_token_file_.close();
@@ -46,23 +46,23 @@ std::vector<TokenType> Scanner::Run(const std::string &input_file_name,
   return token_type_list;
 }
 
-void Scanner::ParseFile(std::vector<TokenType> &token_type_list) {
+void Scanner::ScanFile(std::vector<TokenType> &token_type_list) {
   current_dfa_state_ = DFAState::START;
 
   std::string each_line;
   int line_number = 1;
   while (!input_file_.eof()) {
     std::getline(input_file_, each_line);
-    ParseLine(each_line, line_number, token_type_list);
+    ScanLine(each_line, line_number, token_type_list);
     ++line_number;
   }
 
   token_type_list.emplace_back(TokenType::EOF_TOKEN);
 }
 
-void Scanner::ParseLine(const std::string &each_line,
-                        int line_number,
-                        std::vector<TokenType> &token_type_list) {
+void Scanner::ScanLine(const std::string &each_line,
+                       int line_number,
+                       std::vector<TokenType> &token_type_list) {
   int char_index = 0;
   bool is_index_forward = false;
   bool last_char_is_blank = true;

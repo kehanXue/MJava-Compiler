@@ -18,6 +18,7 @@ enum class TokenType {
   BOOLEAN,
   IF,
   ELSE,
+  WHILE,
   SYSTEM_OUT_PRINTLN,
   LENGTH,
   TRUE,

@@ -6,6 +6,7 @@
 #define MJAVA_COMPILER_UTILS_UTILS_SYNTAX_TYPE_H_
 
 enum class NodeType {
+  UNDEFINED = -1,
   DECLARATION = 0,
   STATEMENT,
   EXPRESSION,
@@ -18,10 +19,11 @@ enum class NodeType {
   ARRAY_NAME,
   NUM,
   EXPRESSION_IDENTIFIER,
-  METHOD_NAME
+  METHOD_NAME,
 };
 
 enum class Declaration {
+  UNDEFINED = -1,
   GOAL = 0,
   MAIN_CLASS,
   CLASS_DECLARATION,
@@ -30,6 +32,7 @@ enum class Declaration {
 };
 
 enum class VarType {
+  UNDEFINED = -1,
   INT_ARRAY = 0,
   BOOLEAN,
   INT,
@@ -37,6 +40,7 @@ enum class VarType {
 };
 
 enum class Statement {
+  UNDEFINED = -1,
   IF_STATEMENT = 0,
   WHILE_STATEMENT,
   PRINT_STATEMENT,
@@ -46,6 +50,7 @@ enum class Statement {
 };
 
 enum class Expression {
+  UNDEFINED = -1,
   INT_EXPRESSION = 0,
   TRUE_EXPRESSION,
   FALSE_EXPRESSION,
@@ -58,6 +63,7 @@ enum class Expression {
 };
 
 enum class SubExpExp {
+  UNDEFINED = -1,
   OP_SUB_EXP = 0,
   EXP_SUB_EXP,
   LENGTH_SUB_EXP,

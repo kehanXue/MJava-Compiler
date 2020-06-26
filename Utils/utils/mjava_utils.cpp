@@ -24,6 +24,7 @@ MJavaUtils::MJavaUtils() {
   umap_keywords_.insert({"boolean", "BOOLEAN"});
   umap_keywords_.insert({"if", "IF"});
   umap_keywords_.insert({"else", "ELSE"});
+  umap_keywords_.insert({"while", "WHILE"});
   umap_keywords_.insert({"System.out.println", "SYSTEM.OUT.PRINTLN"});
   umap_keywords_.insert({"length", "LENGTH"});
   umap_keywords_.insert({"true", "TRUE"});
@@ -167,6 +168,8 @@ TokenType MJavaUtils::StringToTokenType(const std::string &token_type) {
     return TokenType::IF;
   } else if (token_type == "ELSE") {
     return TokenType::ELSE;
+  } else if (token_type == "WHILE") {
+    return TokenType::WHILE;
   } else if (token_type == "SYSTEM_OUT_PRINTLN") {
     return TokenType::SYSTEM_OUT_PRINTLN;
   } else if (token_type == "LENGTH") {
@@ -218,6 +221,89 @@ TokenType MJavaUtils::StringToTokenType(const std::string &token_type) {
   }
 
   return TokenType::ERROR;
+}
+
+std::string MJavaUtils::TokenTypeToString(const TokenType &token_type) {
+  /*
+    * String to TokenTypes
+    */
+  if (token_type == TokenType::CLASS) {
+    return "CLASS";
+  } else if (token_type == TokenType::PUBLIC) {
+    return "PUBLIC";
+  } else if (token_type == TokenType::STATIC) {
+    return "STATIC";
+  } else if (token_type == TokenType::VOID) {
+    return "VOID";
+  } else if (token_type == TokenType::MAIN) {
+    return "MAIN";
+  } else if (token_type == TokenType::STRING) {
+    return "STRING";
+  } else if (token_type == TokenType::EXTENDS) {
+    return "EXTENDS";
+  } else if (token_type == TokenType::RETURN) {
+    return "RETURN";
+  } else if (token_type == TokenType::INT) {
+    return "INT";
+  } else if (token_type == TokenType::BOOLEAN) {
+    return "BOOLEAN";
+  } else if (token_type == TokenType::IF) {
+    return "IF";
+  } else if (token_type == TokenType::ELSE) {
+    return "ELSE";
+  } else if (token_type == TokenType::WHILE) {
+    return "WHILE";
+  } else if (token_type == TokenType::SYSTEM_OUT_PRINTLN) {
+    return "SYSTEM_OUT_PRINTN";
+  } else if (token_type == TokenType::LENGTH) {
+    return "LENGTH";
+  } else if (token_type == TokenType::TRUE) {
+    return "TRUE";
+  } else if (token_type == TokenType::FALSE) {
+    return "FALSE";
+  } else if (token_type == TokenType::THIS) {
+    return "THIS";
+  } else if (token_type == TokenType::NEW) {
+    return "NEW";
+  } else if (token_type == TokenType::IDENTIFIER) {
+    return "IDENTIFIER";
+  } else if (token_type == TokenType::DIGIT) {
+    return "DIGIT";
+  } else if (token_type == TokenType::L_PARENTHESIS) {
+    return "L_PARENTHESIS";
+  } else if (token_type == TokenType::R_PARENTHESIS) {
+    return "R_PARENTHESIS";
+  } else if (token_type == TokenType::L_PARENTHESES) {
+    return "L_PARENTHESES";
+  } else if (token_type == TokenType::R_PARENTHESES) {
+    return "R_PARENTHESES";
+  } else if (token_type == TokenType::L_BRACE) {
+    return "L_BRACE";
+  } else if (token_type == TokenType::R_BRACE) {
+    return "R_BRACE";
+  } else if (token_type == TokenType::COMMA) {
+    return "COMMA";
+  } else if (token_type == TokenType::SEMICOLON) {
+    return "SEMICOLON";
+  } else if (token_type == TokenType::ASSIGNMENT) {
+    return "ASSIGNMENT";
+  } else if (token_type == TokenType::LESS_THAN) {
+    return "LESS_THAN";
+  } else if (token_type == TokenType::ADD) {
+    return "ADD";
+  } else if (token_type == TokenType::SUB) {
+    return "SUB";
+  } else if (token_type == TokenType::MULTI) {
+    return "MULTI";
+  } else if (token_type == TokenType::POINT) {
+    return "POINT";
+  } else if (token_type == TokenType::UN) {
+    return "UN";
+  } else if (token_type == TokenType::AND) {
+    return "AND";
+  }
+
+  return "ERROR";
 }
 
 
