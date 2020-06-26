@@ -11,11 +11,10 @@ Parser::Parser()
 Parser::~Parser() = default;
 
 void Parser::Run(const std::string &input_file_name) {
-
   current_token_pose_ = 0;
 
-  if (output_token_file_.is_open()) {
-    output_token_file_.close();
+  if (output_syntax_tree_file.is_open()) {
+    output_syntax_tree_file.close();
   }
   if (output_error_file_.is_open()) {
     output_error_file_.close();
@@ -24,15 +23,29 @@ void Parser::Run(const std::string &input_file_name) {
   p_scanner_ = std::make_shared<Scanner>();
   token_type_list_ = p_scanner_->Run(input_file_name, input_file_name + "_tokens");
 
+  try {
+    output_syntax_tree_file.open(input_file_name+"_syntax_tree.txt");
+    output_error_file_.open(input_file_name+"_parser_error.txt");
+
+  } catch (...) {
+    std::cout << "Open file failed!" << std::endl;
+    return;
+  }
+
   SyntaxTreeNode syntax_tree_root_node = StartParse();
   PreOrder(syntax_tree_root_node);
 
-  output_token_file_.close();
+  output_syntax_tree_file.close();
   output_error_file_.close();
 }
 
 void Parser::PreOrder(SyntaxTreeNode node) {
-
+  if (!node.IsNull()) {
+    output_syntax_tree_file << node.ToString() + "\r\n\t";
+    for (const auto& child : node.GetChildrenList()) {
+      PreOrder(child);
+    }
+  }
 }
 
 bool Parser::match(TokenType expected) {
@@ -88,7 +101,7 @@ SyntaxTreeNode Parser::MainClass() {
     current_token_pose_++;
   } else {
     current_token_pose_++;
-    output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("class name needed before" +
+    output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("class name needed before " +
         CurrentTokenToString());
   }
 
@@ -311,7 +324,7 @@ SyntaxTreeNode Parser::Type() {
     type_node.SetValue("Identifier");
     current_token_pose_++;
   } else {
-    output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("Error type" +
+    output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("Error type " +
         CurrentTokenToString());
     current_token_pose_++;
   }
@@ -344,7 +357,7 @@ SyntaxTreeNode Parser::Statement() {
       return statement_node;
     }
     default: {
-      output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("Invalid token" +
+      output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("Invalid token " +
           CurrentTokenToString());
       current_token_pose_++;
       if (token_type_list_.at(current_token_pose_) == TokenType::SEMICOLON) {
@@ -456,7 +469,7 @@ SyntaxTreeNode Parser::AssignStatement() {
       return ArrayAssignStatement();
     }
     default: {
-      output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("Invalid statement" +
+      output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("Invalid statement " +
           CurrentTokenToString());
       current_token_pose_++;
       if (token_type_list_.at(current_token_pose_) == TokenType::SEMICOLON) {
@@ -477,7 +490,7 @@ SyntaxTreeNode Parser::VarAssignStatement() {
   if (token_type_list_.at(current_token_pose_) == TokenType::IDENTIFIER) {
     SyntaxTreeNode var_name;
     var_name.SetNodeType(NodeType::VAR_NAME);
-    var_name.SetValue("VarName");
+    var_name.SetValue("VarName ");
     var_assign_node.AddChildNode(var_name);
     current_token_pose_++;
   } else {
@@ -505,7 +518,7 @@ SyntaxTreeNode Parser::ArrayAssignStatement() {
   if (token_type_list_.at(current_token_pose_) == TokenType::IDENTIFIER) {
     SyntaxTreeNode var_name;
     var_name.SetNodeType(NodeType::VAR_NAME);
-    var_name.SetValue("VarName");
+    var_name.SetValue("VarName ");
     array_assign_node.AddChildNode(var_name);
     current_token_pose_++;
   } else {

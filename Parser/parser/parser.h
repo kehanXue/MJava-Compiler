@@ -56,7 +56,7 @@ class Parser {
   std::string CurrentTokenToString();
 
  private:
-  std::ofstream output_token_file_;
+  std::ofstream output_syntax_tree_file;
   std::ofstream output_error_file_;
 
   std::shared_ptr<Scanner> p_scanner_;

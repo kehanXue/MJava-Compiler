@@ -44,6 +44,9 @@ class SyntaxTreeNode {
   VarType GetVarType() const;
   void SetVarType(VarType var_type);
 
+  std::string ToString();
+  static std::string VarTypetoString(VarType var_type);
+
  private:
   bool is_null_;
   bool identifier_type_;
