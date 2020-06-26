@@ -30,7 +30,7 @@ std::vector<TokenType> Scanner::Run(const std::string &input_file_name,
     input_file_.open(input_file_name + ".txt");
     input_file_name_ = input_file_name;
 
-    output_token_file_.open(output_token_file_name + ".txt");
+    output_token_file_.open(output_token_file_name + "_tokens.txt");
     output_error_file_.open(output_token_file_name + "_scanner_error.txt");
   } catch (...) {
     std::cout << "Open file failed!" << std::endl;

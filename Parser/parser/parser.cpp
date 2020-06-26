@@ -21,7 +21,7 @@ void Parser::Run(const std::string &input_file_name) {
   }
 
   p_scanner_ = std::make_shared<Scanner>();
-  token_type_list_ = p_scanner_->Run(input_file_name, input_file_name + "_tokens");
+  token_type_list_ = p_scanner_->Run(input_file_name, input_file_name);
 
   try {
     output_syntax_tree_file.open(input_file_name+"_syntax_tree.txt");
