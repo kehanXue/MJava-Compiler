@@ -40,7 +40,8 @@ bool Parser::match(TokenType expected) {
   if (token_type_list_.at(current_token_pose_) == expected) {
     return true;
   } else {
-    // TODO output error
+    output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("unexpected token: " +
+        CurrentTokenToString());
     return false;
   }
 }
@@ -82,12 +83,13 @@ SyntaxTreeNode Parser::MainClass() {
   if (token_type_list_.at(current_token_pose_) == TokenType::IDENTIFIER) {
     SyntaxTreeNode class_name_node;
     class_name_node.SetNodeType(NodeType::CLASS_NAME);
-    class_name_node.SetValue("CLASS_NAME"); // TODO
+    class_name_node.SetValue(MJavaUtils::TokenTypeToString(token_type_list_.at(current_token_pose_)));
     main_class_node.AddChildNode(class_name_node);
     current_token_pose_++;
   } else {
     current_token_pose_++;
-    // TODO printError("class name needed before");
+    output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("class name needed before" +
+        CurrentTokenToString());
   }
 
   match(TokenType::L_BRACE);
@@ -108,7 +110,8 @@ SyntaxTreeNode Parser::MainClass() {
     current_token_pose_++;
   } else {
     current_token_pose_++;
-    // TODO printError("Main Args name needed before");
+    output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("Main Args name needed before " +
+        CurrentTokenToString());
   }
 
   match(TokenType::R_PARENTHESES);
@@ -133,12 +136,13 @@ SyntaxTreeNode Parser::ClassDeclaration() {
   if (token_type_list_.at(current_token_pose_) == TokenType::IDENTIFIER) {
     SyntaxTreeNode class_name_node;
     class_name_node.SetNodeType(NodeType::CLASS_NAME);
-    class_name_node.SetValue("ClassName");
+    class_name_node.SetValue(MJavaUtils::TokenTypeToString(token_type_list_.at(current_token_pose_)));
     class_decl_node.AddChildNode(class_name_node);
     current_token_pose_++;
   } else {
     current_token_pose_++;
-    // TODO printError("class name needed before");
+    output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("class name needed before " +
+        CurrentTokenToString());
   }
 
   if (token_type_list_.at(current_token_pose_) == TokenType::EXTENDS) {
@@ -146,12 +150,13 @@ SyntaxTreeNode Parser::ClassDeclaration() {
     if (token_type_list_.at(current_token_pose_) == TokenType::IDENTIFIER) {
       SyntaxTreeNode extends_class_name_node;
       extends_class_name_node.SetNodeType(NodeType::CLASS_NAME);
-      extends_class_name_node.SetValue("ClassName");
+      extends_class_name_node.SetValue(MJavaUtils::TokenTypeToString(token_type_list_.at(current_token_pose_)));
       class_decl_node.AddChildNode(extends_class_name_node);
       current_token_pose_++;
     } else {
       current_token_pose_++;
-      // TODO printError("Extends class name needed before");
+      output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("Extends class name needed before " +
+          CurrentTokenToString());
     }
   }
 
@@ -191,7 +196,8 @@ SyntaxTreeNode Parser::VarDeclaration() {
     current_token_pose_++;
   } else {
     current_token_pose_++;
-    // TODO printError("identifier needed at");
+    output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("Identifier needed at " +
+        CurrentTokenToString());
   }
 
   return var_decl_node;
@@ -216,7 +222,8 @@ SyntaxTreeNode Parser::MethodDeclaration() {
     current_token_pose_++;
   } else {
     current_token_pose_++;
-    // TODO printError("variable name needed at");
+    output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("Variable name needed at " +
+        CurrentTokenToString());
   }
 
   match(TokenType::L_PARENTHESES);
@@ -231,7 +238,8 @@ SyntaxTreeNode Parser::MethodDeclaration() {
       method_decl_node.AddChildNode(var_name_node);
       current_token_pose_++;
     } else {
-      // TODO printError("variable name needed at");
+      output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("Variable name needed at " +
+          CurrentTokenToString());
       current_token_pose_++;
     }
 
@@ -247,7 +255,8 @@ SyntaxTreeNode Parser::MethodDeclaration() {
         method_decl_node.AddChildNode(var_name_node);
         current_token_pose_++;
       } else {
-        // TODO printError("variable name needed at");
+        output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("Variable name needed at " +
+            CurrentTokenToString());
         current_token_pose_++;
       }
     }
@@ -302,7 +311,8 @@ SyntaxTreeNode Parser::Type() {
     type_node.SetValue("Identifier");
     current_token_pose_++;
   } else {
-    // TODO printError("Illegel Type");
+    output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("Error type" +
+        CurrentTokenToString());
     current_token_pose_++;
   }
 
@@ -334,7 +344,8 @@ SyntaxTreeNode Parser::Statement() {
       return statement_node;
     }
     default: {
-      // TODO printError("Invalid Token");
+      output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("Invalid token" +
+          CurrentTokenToString());
       current_token_pose_++;
       if (token_type_list_.at(current_token_pose_) == TokenType::SEMICOLON) {
         current_token_pose_++;
@@ -445,7 +456,8 @@ SyntaxTreeNode Parser::AssignStatement() {
       return ArrayAssignStatement();
     }
     default: {
-      // TODO printError("Invalid statement");
+      output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("Invalid statement" +
+          CurrentTokenToString());
       current_token_pose_++;
       if (token_type_list_.at(current_token_pose_) == TokenType::SEMICOLON) {
         current_token_pose_++;
@@ -469,7 +481,8 @@ SyntaxTreeNode Parser::VarAssignStatement() {
     var_assign_node.AddChildNode(var_name);
     current_token_pose_++;
   } else {
-    // TODO printError("identifier needed at");
+    output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("Identifier needed at " +
+        CurrentTokenToString());
     current_token_pose_++;
   }
 
@@ -496,7 +509,8 @@ SyntaxTreeNode Parser::ArrayAssignStatement() {
     array_assign_node.AddChildNode(var_name);
     current_token_pose_++;
   } else {
-    // TODO printError("identifier needed at");
+    output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("Identifier needed at " +
+        CurrentTokenToString());
     current_token_pose_++;
   }
 
@@ -548,7 +562,8 @@ SyntaxTreeNode Parser::Expression() {
         exp_node = NewExpression();
         return exp_node;
       } else {
-        // TODO printError("Unexpected token");
+        output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("Unexpected token " +
+            CurrentTokenToString());
         current_token_pose_++;
         exp_node.SetIsNull(true);
         return exp_node;
@@ -563,7 +578,8 @@ SyntaxTreeNode Parser::Expression() {
       return exp_node;
     }
     default: {
-      // TODO printError("Unexpected token");
+      output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("Unexpected token " +
+          CurrentTokenToString());
       current_token_pose_++;
       if (token_type_list_.at(current_token_pose_) == TokenType::SEMICOLON) {
         current_token_pose_++;
@@ -586,7 +602,8 @@ SyntaxTreeNode Parser::IntExpression() {
     int_exp_node.AddChildNode(digit_name);
     current_token_pose_++;
   } else {
-    // TODO printError("identifier needed at");
+    output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("Identifier needed at " +
+        CurrentTokenToString());
     current_token_pose_++;
   }
 
@@ -638,7 +655,8 @@ SyntaxTreeNode Parser::IdentifierExpression() {
     identifier_exp_node.AddChildNode(identifier_name);
     current_token_pose_++;
   } else {
-    // TODO printError("identifier needed at");
+    output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("Identifier needed at " +
+        CurrentTokenToString());
     current_token_pose_++;
   }
 
@@ -697,7 +715,8 @@ SyntaxTreeNode Parser::NewExpression() {
     new_exp_node.AddChildNode(identifier_name);
     current_token_pose_++;
   } else {
-    // TODO printError("identifier needed at");
+    output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("Identifier needed at " +
+        CurrentTokenToString());
     current_token_pose_++;
   }
 
@@ -790,7 +809,8 @@ SyntaxTreeNode Parser::SubExpStatament() {
         sub_exp_node = MethodSubExp();
         return sub_exp_node;
       } else {
-        // TODO printError("Unexpected token");
+        output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("Unexpected token " +
+            CurrentTokenToString());
         current_token_pose_++;
         sub_exp_node.SetIsNull(true);
         return sub_exp_node;
@@ -874,7 +894,8 @@ SyntaxTreeNode Parser::MethodSubExp() {
     method_sub_exp_node.AddChildNode(identifier_name);
     current_token_pose_++;
   } else {
-    // TODO printError("method needed at");
+    output_error_file_ << ErrorMsgBuilder::BuildErrorMsg("Method needed at " +
+        CurrentTokenToString());
     current_token_pose_++;
   }
 
@@ -910,4 +931,8 @@ SyntaxTreeNode Parser::NullSubExp() {
   null_node.SetSubExpExp(SubExpExp::NULL_SUB_EXP);
 
   return null_node;
+}
+
+std::string Parser::CurrentTokenToString() {
+  return MJavaUtils::TokenTypeToString(token_type_list_.at(current_token_pose_));
 }

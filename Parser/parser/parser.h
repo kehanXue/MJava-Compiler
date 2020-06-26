@@ -53,6 +53,8 @@ class Parser {
   SyntaxTreeNode MethodSubExp();
   static SyntaxTreeNode NullSubExp();
 
+  std::string CurrentTokenToString();
+
  private:
   std::ofstream output_token_file_;
   std::ofstream output_error_file_;

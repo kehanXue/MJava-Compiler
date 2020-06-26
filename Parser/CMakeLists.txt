@@ -10,4 +10,13 @@ include_directories(
 )
 
 add_executable(mjava-parser
-  main.cpp parser/syntax_tree_node.cpp parser/syntax_tree_node.h ../Utils/utils/syntax_type.h parser/parser.cpp parser/parser.h)
+  main.cpp
+  parser/syntax_tree_node.h
+  parser/syntax_tree_node.cpp
+  parser/parser.h
+  parser/parser.cpp
+  ../Utils/utils/syntax_type.h
+  ../Scanner/scanner/scanner.h
+  ../Scanner/scanner/scanner.cpp
+  ../Utils/utils/mjava_utils.h
+  ../Utils/utils/mjava_utils.cpp)
